@@ -1,14 +1,24 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 
+
+var  Schema = mongoose.Schema,
+  Rental = require('./rental'),
+  Bookings=require('./booking');
+
 // define the User model schema
 const UserSchema = new mongoose.Schema({
-  email: {
-    type: String,
-    index: { unique: true }
-  },
-  password: String,
-  name: String
+      name: String,
+      gender:String,
+      address:String,
+      dob:{ type: Date, default: Date.now },
+      email: {
+        type: String,
+        index: { unique: true }
+      },
+      password: String,
+      rentals:[Rental.schema],
+      bookings:[Bookings.schema]
 });
 
 

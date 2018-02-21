@@ -12,6 +12,10 @@ module.exports.connect = (uri) => {
     process.exit(1);
   });
 
-  // load models
-  require('./user');
+
 };
+
+// load models
+module.exports.User = require('./user');
+module.exports.Rental = require('./rental');
+module.exports.Bookings = require('./booking');
