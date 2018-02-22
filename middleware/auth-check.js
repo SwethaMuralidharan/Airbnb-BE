@@ -7,7 +7,15 @@ const config = require('../config');
  *  The Auth Checker middleware function.
  */
 module.exports = (req, res, next) => {
+  if(req.method == "OPTIONS") {
+    return next();
+  }
+
   if (!req.headers.authorization) {
+    return next();//to be removed 
+    console.log(req.headers)
+    console.log(req.method)
+    console.log("not authorized")
     return res.status(401).send();
   }
 

@@ -23,15 +23,16 @@ passport.use('local-login', localLoginStrategy);
 
 // pass the authorization checker middleware
 const authCheckMiddleware = require('./middleware/auth-check');
-app.use('/api', authCheckMiddleware);
+
 
 // routes
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, authorization");
   res.header("Access-Control-Allow-Methods", "PUT,GET,POST,DELETE");
   next();
 });
+app.use('/api', authCheckMiddleware);
 const authRoutes = require('./routes/auth');
 const apiRoutes = require('./routes/api');
 app.use('/auth', authRoutes);

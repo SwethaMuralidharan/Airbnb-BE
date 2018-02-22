@@ -1,7 +1,8 @@
 const express = require('express');
-
-
 const router = new express.Router();
+var controller = require('../controllers/controller.js');
+
+
 
 router.get('/dashboard', (req, res) => {
   res.status(200).json({
@@ -9,5 +10,8 @@ router.get('/dashboard', (req, res) => {
   });
 });
 
+router.get('/users', controller.all_users);
+router.get('/users/:user_id', controller.get_user);
+router.get('/users/:user_id/rentals/:rental_id',controller.get_rental);
 
 module.exports = router;
