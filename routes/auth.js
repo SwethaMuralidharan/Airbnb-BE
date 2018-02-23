@@ -53,15 +53,18 @@ function validateLoginForm(payload) {
   const errors = {};
   let isFormValid = true;
   let message = '';
-
+  console.log(isFormValid);
+  console.log(payload);
   if (!payload || typeof payload.email !== 'string' || payload.email.trim().length === 0) {
     isFormValid = false;
     errors.email = 'Please provide your email address.';
+    console.log("email",isFormValid);
   }
 
   if (!payload || typeof payload.password !== 'string' || payload.password.trim().length === 0) {
     isFormValid = false;
     errors.password = 'Please provide your password.';
+    console.log("password",isFormValid);
   }
 
   if (!isFormValid) {
@@ -89,6 +92,8 @@ router.post('/signup', (req, res, next) => {
   return passport.authenticate('local-signup', (err) => {
     if (err) {
       if (err.name === 'MongoError' && err.code === 11000) {
+        console.log(err.name);
+        console.log(err.code);
         // the 11000 Mongo code is for a duplication email error
         // the 409 HTTP status code is for conflict error
         return res.status(409).json({
