@@ -31,6 +31,24 @@ function get_rental(req,res){
           }
     })
 }
+function post_rental(req,res){
+      var user_id=req.params.user_id;
+      User.findById(user_id).exec(function(err,foundUser){
+      console.log("request from front end is",req.body);
+      if(err) {
+        console.log(err);
+      }
+      else if(foundUser===null) {
+        res.status(404).json({error:"No user found by this ID"});
+      }
+      else {
+        foundUser.rentals.push(req.body);
+      }
+      foundUser.save();
+      console.log("Updateduser is ",foundUser);
+      res.json(foundUser);
+      })
+}
 
 
 
@@ -38,5 +56,6 @@ function get_rental(req,res){
 module.exports = {
   all_users: all_users,
   get_user: get_user,
-  get_rental:get_rental
+  get_rental:get_rental,
+  post_rental:post_rental
 };

@@ -13,5 +13,6 @@ router.get('/dashboard', (req, res) => {
 router.get('/users', controller.all_users);
 router.get('/users/:user_id', controller.get_user);
 router.get('/users/:user_id/rentals/:rental_id',controller.get_rental);
+router.post('/users/:user_id/rentals/',controller.post_rental);
 
 module.exports = router;

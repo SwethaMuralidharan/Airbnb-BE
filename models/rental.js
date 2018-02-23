@@ -7,6 +7,7 @@ var RentalSchema = new Schema({
       user_id:{type: Schema.Types.ObjectId, ref:'User'},
       address:String,
       rooms:Number,
+      bed:Number,
       bathrooms:Number,
       max_guest:Number,
       price_per_night:Number,
