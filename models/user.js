@@ -4,7 +4,7 @@ const bcrypt = require('bcrypt');
 
 var  Schema = mongoose.Schema,
   Rental = require('./rental'),
-  Bookings=require('./booking');
+  Booking=require('./booking');
 
 // define the User model schema
 const UserSchema = new mongoose.Schema({
@@ -18,7 +18,7 @@ const UserSchema = new mongoose.Schema({
       },
       password: String,
       rentals:[Rental.schema],
-      bookings:[Bookings.schema]
+      bookings:[{type: Schema.Types.ObjectId, ref:'Booking'}]
 });
 
 

@@ -9,9 +9,10 @@ var BookingSchema = new Schema({
     booking_date: { type: Date, default: Date.now },
     start_date:   { type: Date, default: Date.now },
     end_date:     { type: Date, default: Date.now },
-    total_cost:    Number
+    total_cost:    Number,
+    total_guests:  Number
 });
 
-var Bookings = mongoose.model('Bookings', BookingSchema);
+var Booking = mongoose.model('Booking', BookingSchema);
 
-module.exports = Bookings;
+module.exports = Booking;

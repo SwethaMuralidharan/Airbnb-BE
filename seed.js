@@ -1,9 +1,9 @@
 
 var db = require('./models');
 
- db.User.remove_all
-// db.Booking.remove_all
-// db.Rental.remove_all
+db.User.remove_all
+db.Booking.remove_all
+db.Rental.remove_all
 
 var UsersList = [{
                     name: "Rita",
@@ -31,15 +31,15 @@ var RentalsList=[{
 
                 }]
 
-var BookingsList=[{
-total_cost:160
-}]
+// var BookingsList=[{
+// total_cost:160
+// }]
 UsersList.forEach(function(user){
   user.rentals = RentalsList;
 });
-UsersList.forEach(function(user){
-  user.bookings = BookingsList;
-});
+// UsersList.forEach(function(user){
+//   user.bookings = BookingsList;
+// });
 
 db.User.remove({}, function(err, users){
   // code in here runs after all users are removed

@@ -1,7 +1,7 @@
 var mongoose = require('mongoose'),
   Schema = mongoose.Schema,
   User = require('./user'),
-  Bookings=require('./booking');
+  Booking=require('./booking');
 
 var RentalSchema = new Schema({
       user_id:{type: Schema.Types.ObjectId, ref:'User'},
@@ -12,7 +12,7 @@ var RentalSchema = new Schema({
       max_guest:Number,
       price_per_night:Number,
       amenities:String,
-      bookings:[Bookings.schema],
+      bookings:[{type: Schema.Types.ObjectId, ref:'Booking'}],
       image_urls:[]
 });
 

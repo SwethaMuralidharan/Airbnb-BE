@@ -18,4 +18,4 @@ module.exports.connect = (uri) => {
 // load models
 module.exports.User = require('./user');
 module.exports.Rental = require('./rental');
-module.exports.Bookings = require('./booking');
+module.exports.Booking = require('./booking');
