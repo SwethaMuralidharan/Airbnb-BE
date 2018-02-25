@@ -29,17 +29,27 @@ var RentalsList=[{
                     image_urls:["https://a0.muscache.com/im/pictures/11341175/20662903_original.jpg?aki_policy=large",
                                 "https://a0.muscache.com/im/pictures/11341171/d5ca49b5_original.jpg?aki_policy=xx_large"]
 
-                }]
+                },
+                {
+                    address:"120 Market Street,SFO,CA",
+                    rooms:2,
+                    bathrooms:1,
+                    max_guest:4,
+                    price_per_night:120,
+                    amenities:"Wifi,SmartTv,Breakfast,washer,Iron",
+                    image_urls:["https://a0.muscache.com/im/pictures/79452273/12bc436d_original.jpg?aki_policy=large",
+                                "https://a0.muscache.com/im/pictures/79451711/24dda9d9_original.jpg?aki_policy=x_large"]
 
-// var BookingsList=[{
-// total_cost:160
-// }]
-UsersList.forEach(function(user){
-  user.rentals = RentalsList;
-});
+                }
+                ]
+
+
 // UsersList.forEach(function(user){
-//   user.bookings = BookingsList;
+//   user.rentals = RentalsList;
 // });
+
+UsersList[0].rentals=RentalsList[0];
+UsersList[1].rentals=RentalsList[1];
 
 db.User.remove({}, function(err, users){
   // code in here runs after all users are removed
