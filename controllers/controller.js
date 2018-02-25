@@ -134,6 +134,23 @@ function get_userbooking(req,res){
   })
 }
 
+function delete_booking(req,res){
+  console.log("delete booking");
+  var booking_id=req.params.booking_id;
+  var user_id=req.params.user_id;
+
+  Booking.findOneAndRemove({ _id: booking_id }, function (err, deletedBooking) {
+    User.findById(user_id).exec(function(err,foundUser){
+      foundUser.bookings.remove(booking_id);
+      foundUser.save(function(err,removedFromUser){
+        console.log(removedFromUser);
+        res.json(removedFromUser);
+      });
+    })
+  });
+}
+
+
 module.exports = {
   all_users: all_users,
   get_user: get_user,
@@ -142,5 +159,6 @@ module.exports = {
   getall_rentals:getall_rentals,
   getrentals_by_searchTerm:getrentals_by_searchTerm,
   post_booking:post_booking,
-  get_userbooking:get_userbooking
+  get_userbooking:get_userbooking,
+  delete_booking:delete_booking
 };
