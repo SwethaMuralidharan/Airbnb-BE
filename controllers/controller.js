@@ -151,6 +151,37 @@ function delete_booking(req,res){
 }
 
 
+function update_booking(req,res){
+  console.log("updating booking");
+  console.log("request from front end is",req.body);
+  Booking.findByIdAndUpdate(
+            req.params.booking_id,
+            {$set:
+                {
+                  'start_date':req.body.start_date,
+                  'end_date':req.body.end_date,
+                  'total_cost':req.body.total_cost,
+                  'total_guests':req.body.total_guests
+                }
+            },
+            {new:true},
+            function(err,updatedBooking){
+              if(err){
+                  res.json({error :err}) ;
+              } else{
+                User.findById(req.params.user_id).populate({path:'bookings',populate:{path:'rental_id'}}).exec(function(err,foundUser){
+                  if(err){
+                    console.log("error in finding user ",err)
+                  }
+                  else{
+                        console.log(foundUser);
+                        res.json(foundUser);
+                      }
+                })
+              }
+            })
+}
+
 module.exports = {
   all_users: all_users,
   get_user: get_user,
@@ -160,5 +191,6 @@ module.exports = {
   getrentals_by_searchTerm:getrentals_by_searchTerm,
   post_booking:post_booking,
   get_userbooking:get_userbooking,
-  delete_booking:delete_booking
+  delete_booking:delete_booking,
+  update_booking:update_booking
 };
