@@ -79,7 +79,7 @@ function delete_rental(req,res){
     var user_id=req.params.user_id;
     User.findById(user_id).exec(function(err,foundUser){
       if(err){
-        console.log("error in deleting reviews ",err)
+        console.log("error in deleting rentals ",err)
       }
       else{
             var deleted_rental=foundUser.rentals.id(rental_id);
@@ -196,6 +196,37 @@ function update_booking(req,res){
             })
 }
 
+function update_rental(req,res){
+  console.log("updating rental");
+  console.log("request from front end is",req.body);
+  var rental_id=req.params.rental_id;
+  var user_id=req.params.user_id;
+  User.findById(user_id).exec(function(err,foundUser){
+    if(err){
+      console.log("error in updating rentals ",err)
+    }
+    else{
+          var updated_rental=foundUser.rentals.id(rental_id);
+          if(updated_rental){
+            updated_rental.address=req.body.address;
+            updated_rental.rooms=req.body.rooms;
+            updated_rental.bed=req.body.bed;
+            updated_rental.bathrooms=req.body.bathrooms;
+            updated_rental.max_guest=req.body.max_guest;
+            updated_rental.price_per_night=req.body.price_per_night;
+            updated_rental.amenities=req.body.amenities;
+            updated_rental.amenities=req.body.amenities;
+            updated_rental.image_urls=req.body.image_urls;
+
+             foundUser.save(function(err,savedRental){
+               console.log("updated_rental",updated_rental);
+               res.json(savedRental);
+            })
+          }
+        }
+  })
+}
+
 module.exports = {
   all_users: all_users,
   get_user: get_user,
@@ -207,5 +238,6 @@ module.exports = {
   get_userbooking:get_userbooking,
   delete_booking:delete_booking,
   update_booking:update_booking,
-  delete_rental:delete_rental
+  delete_rental:delete_rental,
+  update_rental:update_rental
 };
