@@ -53,6 +53,11 @@ UsersList[1].rentals=RentalsList[1];
 
 db.User.remove({}, function(err, users){
   // code in here runs after all users are removed
+  db.Rental.create(RentalsList,function(err,rentals){
+    if (err) { return console.log('ERROR', err); }
+    console.log("all rentals:", rentals);
+    console.log("created", rentals.length, "rentals");
+  })
   db.User.create(UsersList, function(err, users){
     // code in here runs after all users are created
     if (err) { return console.log('ERROR', err); }

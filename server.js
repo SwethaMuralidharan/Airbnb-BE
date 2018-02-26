@@ -13,6 +13,7 @@ app.use(express.static('./static/'));
 // tell the app to parse HTTP body messages
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
 // pass the passport middleware
 app.use(passport.initialize());
 
@@ -41,6 +42,6 @@ app.use('/api', apiRoutes);
 
 
 // start the server
-app.listen(8080, () => {
-  console.log('Server is running on http://localhost:8080 or http://127.0.0.1:8080');
+app.listen(process.env.PORT || 8080, function () {
+  console.log('Express server is up and running on https://localhost:8080/');
 });

@@ -74,7 +74,11 @@ function getrentals_by_searchTerm(req,res){
     res.json(foundRental);
   })
 }
-
+function delete_rental(req,res){
+  Rental.findOneAndRemove({ _id: req.params.rental_id }, function (err, deletedRental) {
+    res.json(deletedRental);
+  });
+}
 function post_booking(req,res){
   console.log("post_booking called");
   console.log("request from FE",req.body);
@@ -98,9 +102,7 @@ function post_booking(req,res){
           else {
             foundRental.bookings.push(newBooking._id);
             console.log("booking id pushed to rental",foundRental);
-          }
-          foundRental.save();
-        })
+        }})
 
         User.findById(user_id).exec(function(err,foundUser){
           if(err) {
@@ -192,5 +194,6 @@ module.exports = {
   post_booking:post_booking,
   get_userbooking:get_userbooking,
   delete_booking:delete_booking,
-  update_booking:update_booking
+  update_booking:update_booking,
+  delete_rental:delete_rental
 };

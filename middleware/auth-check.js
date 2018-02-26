@@ -12,8 +12,9 @@ module.exports = (req, res, next) => {
   }
 
   if (!req.headers.authorization) {
-    console.log(req.headers)
-    console.log(req.method)
+    return next();
+    console.log(req.headers);
+    console.log(req.method);
     console.log("not authorized")
     return res.status(401).send();
   }

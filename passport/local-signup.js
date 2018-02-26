@@ -14,13 +14,15 @@ module.exports = new PassportLocalStrategy({
   const userData = {
     email: email.trim(),
     password: password.trim(),
-    name: req.body.name.trim()
+    name: req.body.name.trim(),
+    dob:req.body.dob.trim(),
+    gender:req.body.gender.trim(),
+    address:req.body.address.trim()
   };
 
   const newUser = new User(userData);
   newUser.save((err) => {
     if (err) { return done(err); }
-
     return done(null);
   });
 });
