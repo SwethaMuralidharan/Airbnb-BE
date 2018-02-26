@@ -87,8 +87,6 @@ router.post('/signup', (req, res, next) => {
       errors: validationResult.errors
     });
   }
-
-
   return passport.authenticate('local-signup', (err) => {
     if (err) {
       if (err.name === 'MongoError' && err.code === 11000) {
@@ -104,13 +102,11 @@ router.post('/signup', (req, res, next) => {
           }
         });
       }
-
       return res.status(400).json({
         success: false,
         message: 'Could not process the form.'
       });
     }
-
     return res.status(200).json({
       success: true,
       message: 'You have successfully signed up! Now you should be able to log in.'
@@ -127,8 +123,6 @@ router.post('/login', (req, res, next) => {
       errors: validationResult.errors
     });
   }
-
-
   return passport.authenticate('local-login', (err, token, userData) => {
     if (err) {
       if (err.name === 'IncorrectCredentialsError') {
@@ -137,14 +131,11 @@ router.post('/login', (req, res, next) => {
           message: err.message
         });
       }
-
       return res.status(400).json({
         success: false,
         message: 'Could not process the form.'
       });
     }
-
-
     return res.json({
       success: true,
       message: 'You have successfully logged in!',
@@ -153,6 +144,5 @@ router.post('/login', (req, res, next) => {
     });
   })(req, res, next);
 });
-
 
 module.exports = router;

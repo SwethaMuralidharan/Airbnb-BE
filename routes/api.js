@@ -2,14 +2,6 @@ const express = require('express');
 const router = new express.Router();
 var controller = require('../controllers/controller.js');
 
-
-
-// router.get('/dashboard', (req, res) => {
-//   res.status(200).json({
-//     message: "You're authorized to see this secret message."
-//   });
-// });
-
 router.get('/users', controller.all_users);
 router.get('/users/:user_id/bookings',controller.get_userbooking);
 router.get('/users/:user_id', controller.get_user);

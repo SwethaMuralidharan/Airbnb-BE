@@ -19,7 +19,6 @@ module.exports = new PassportLocalStrategy({
     gender:req.body.gender.trim(),
     address:req.body.address.trim()
   };
-
   const newUser = new User(userData);
   newUser.save((err) => {
     if (err) { return done(err); }

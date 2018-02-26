@@ -3,22 +3,24 @@ var User = models.User;
 var Rental=models.Rental;
 var Booking=models.Booking;
 
-function all_users(req, res) {
+//GET all users
+function all_users(req, res){
   User.find({}, function(err, users) {
     if (err) { console.log(err)}
     res.json(users)
   })
 }
+
 // GET one user
-function get_user(req, res) {
-  console.log("get user called");
-  console.log("user id ",req.params.user_id);
+function get_user(req, res){
+  console.log("Getting User",req.params.user_id);
    User.findById(req.params.user_id, function(err, user) {
     console.log(user);
 		res.json(user);
 	});
 }
 
+//GET one rental by Id
 function get_rental(req,res){
     var user_id=req.params.user_id;
     var rental_id=req.params.rental_id;
@@ -32,10 +34,11 @@ function get_rental(req,res){
           }
     })
 }
+
+//POST a RENTAL
 function post_rental(req,res){
       var user_id=req.params.user_id;
       User.findById(user_id).exec(function(err,foundUser){
-      console.log("request from front end is",req.body);
       if(err) {
         console.log(err);
       }
@@ -54,8 +57,10 @@ function post_rental(req,res){
       res.json(foundUser);
       })
 }
+
+//GET All rentals
 function getall_rentals(req,res){
-  console.log("getall rentals called");
+  console.log("Getting All Rentals");
   Rental.find({}, function(err, rentals) {
     if (err) { console.log(err)}
     console.log(rentals);
@@ -63,17 +68,15 @@ function getall_rentals(req,res){
   })
 }
 
-
+//GET searchItem
 function getrentals_by_searchTerm(req,res){
-  console.log("getrentals_by_searchTerm called");
-  console.log("max_guests",req.query.max_guests);
-  console.log("request from FE",req.params.searchTerm);
   Rental.find({address:new RegExp(req.params.searchTerm),max_guest:{ $gte: req.query.max_guests },price_per_night: { $gt:0,$lte: req.query.price_per_night }},function(err,foundRental){
     if(err){console.log(err)}
-    console.log(foundRental);
     res.json(foundRental);
   })
 }
+
+//DELETE A RENTAL BY ID
 function delete_rental(req,res){
     var rental_id=req.params.rental_id;
     var user_id=req.params.user_id;
@@ -82,18 +85,20 @@ function delete_rental(req,res){
         console.log("error in deleting rentals ",err)
       }
       else{
+
             var deleted_rental=foundUser.rentals.id(rental_id);
             deleted_rental.remove();
             foundUser.save(function(err,savedUser){
+              Rental.findOneAndRemove({ _id: rental_id }, function (err, deletedRental) {
               res.json(savedUser);
+              })
             })
          }
     })
 }
 
+//POST A BOOKING
 function post_booking(req,res){
-  console.log("post_booking called");
-  console.log("request from FE",req.body);
   var user_id=req.params.user_id;
   var rental_id = req.params.rental_id;
   var newBooking = new Booking(req.body);
@@ -113,7 +118,6 @@ function post_booking(req,res){
           }
           else {
             foundRental.bookings.push(newBooking._id);
-            console.log("booking id pushed to rental",foundRental);
         }})
 
         User.findById(user_id).exec(function(err,foundUser){
@@ -125,7 +129,6 @@ function post_booking(req,res){
           }
           else {
               foundUser.bookings.push(newBooking._id);
-              console.log("booking id pushed to user object",foundUser);
           }
           foundUser.save();
           res.json(foundUser);
@@ -134,8 +137,9 @@ function post_booking(req,res){
   });
 }
 
+//GET USER'S BOOKING
 function get_userbooking(req,res){
-  console.log("get_userbooking called");
+  console.log("Getting User's BookingList");
   var user_id=req.params.user_id;
   User.findById(user_id).populate({path:'bookings',populate:{path:'rental_id'}}).exec(function(err,foundUser){
     if(err){
@@ -148,8 +152,9 @@ function get_userbooking(req,res){
   })
 }
 
+
+//DELETE BOOKING
 function delete_booking(req,res){
-  console.log("delete booking");
   var booking_id=req.params.booking_id;
   var user_id=req.params.user_id;
 
@@ -164,10 +169,8 @@ function delete_booking(req,res){
   });
 }
 
-
+//UPDATE A BOOKING
 function update_booking(req,res){
-  console.log("updating booking");
-  console.log("request from front end is",req.body);
   Booking.findByIdAndUpdate(
             req.params.booking_id,
             {$set:
@@ -196,9 +199,9 @@ function update_booking(req,res){
             })
 }
 
+
+//UPDATE A RENTAL
 function update_rental(req,res){
-  console.log("updating rental");
-  console.log("request from front end is",req.body);
   var rental_id=req.params.rental_id;
   var user_id=req.params.user_id;
   User.findById(user_id).exec(function(err,foundUser){
@@ -226,6 +229,7 @@ function update_rental(req,res){
         }
   })
 }
+
 
 module.exports = {
   all_users: all_users,
