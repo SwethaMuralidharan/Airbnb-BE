@@ -75,10 +75,22 @@ function getrentals_by_searchTerm(req,res){
   })
 }
 function delete_rental(req,res){
-  Rental.findOneAndRemove({ _id: req.params.rental_id }, function (err, deletedRental) {
-    res.json(deletedRental);
-  });
+    var rental_id=req.params.rental_id;
+    var user_id=req.params.user_id;
+    User.findById(user_id).exec(function(err,foundUser){
+      if(err){
+        console.log("error in deleting reviews ",err)
+      }
+      else{
+            var deleted_rental=foundUser.rentals.id(rental_id);
+            deleted_rental.remove();
+            foundUser.save(function(err,savedUser){
+              res.json(savedUser);
+            })
+         }
+    })
 }
+
 function post_booking(req,res){
   console.log("post_booking called");
   console.log("request from FE",req.body);
