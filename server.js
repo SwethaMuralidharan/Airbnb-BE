@@ -3,8 +3,6 @@ const bodyParser = require('body-parser');
 const passport = require('passport');
 const config = require('./config');
 
-// connect to the database and load models
-require('.//models').connect(config.dbUri);
 
 const app = express();
 // tell the app to look for static files in these directories

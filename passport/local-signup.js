@@ -1,4 +1,4 @@
-const User = require('mongoose').model('User');
+const User = require('../models').User;
 const PassportLocalStrategy = require('passport-local').Strategy;
 
 
