@@ -23,7 +23,7 @@ const authCheckMiddleware = require('./middleware/auth-check');
 
 
 app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", process.env.REACT_APP_FRONT_END_URL);
+  res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, authorization");
   res.header("Access-Control-Allow-Methods", "PUT,GET,POST,DELETE");
   next();
