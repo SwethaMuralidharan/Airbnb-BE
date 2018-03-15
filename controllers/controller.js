@@ -30,8 +30,13 @@ function get_rental(req,res){
         console.log("error in finding user ",err)
       }
       else{
-            var rental=foundUser.rentals.id(rental_id);
-            res.json(rental);
+            Rental.findById(rental_id).populate('user_id').exec(function(err,rental){
+                console.log("rental info from backend:",rental);
+                res.json(rental);
+            });
+            // var rental=foundUser.rentals.id(rental_id);
+            // console.log("rental info from backend:",rental)
+            // res.json(rental);
           }
     })
 }
@@ -217,12 +222,12 @@ function post_booking(req,res){
 function get_userbooking(req,res){
   console.log("Getting User's BookingList");
   var user_id=req.params.user_id;
-  User.findById(user_id).populate({path:'bookings',populate:{path:'rental_id'}}).exec(function(err,foundUser){
+  User.findById(user_id).populate({path:'bookings',populate:{path:'rental_id',populate:{path:'user_id'}}}).exec(function(err,foundUser){
     if(err){
       console.log("error in finding user ",err)
     }
     else{
-          console.log(foundUser);
+          console.log("user bookings list",foundUser);
           res.json(foundUser);
         }
   })
@@ -290,7 +295,7 @@ function update_booking(req,res){
                                     if(err){
                                         res.json({error :err}) ;
                                     } else{
-                                      User.findById(req.params.user_id).populate({path:'bookings',populate:{path:'rental_id'}}).exec(function(err,foundUser){
+                                      User.findById(req.params.user_id).populate({path:'bookings',populate:{path:'rental_id',populate:{path:'user_id'}}}).exec(function(err,foundUser){
                                         if(err){
                                           console.log("error in finding user ",err)
                                         }
